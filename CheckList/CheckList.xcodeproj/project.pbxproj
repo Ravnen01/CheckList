@@ -14,6 +14,7 @@
 		1948B64C1C88295400831AFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1948B64A1C88295400831AFD /* LaunchScreen.storyboard */; };
 		1948B6541C88313800831AFD /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B6531C88313800831AFD /* ChecklistItem.swift */; };
 		1948B6561C88501200831AFD /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B6551C88501200831AFD /* AddItemViewController.swift */; };
+		19B1704C1C8867B6001D2CB7 /* AddItemViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B1704B1C8867B6001D2CB7 /* AddItemViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		1948B64D1C88295400831AFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1948B6531C88313800831AFD /* ChecklistItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
 		1948B6551C88501200831AFD /* AddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
+		19B1704B1C8867B6001D2CB7 /* AddItemViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddItemViewControllerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				1948B64D1C88295400831AFD /* Info.plist */,
 				1948B6531C88313800831AFD /* ChecklistItem.swift */,
 				1948B6551C88501200831AFD /* AddItemViewController.swift */,
+				19B1704B1C8867B6001D2CB7 /* AddItemViewControllerDelegate.swift */,
 			);
 			path = CheckList;
 			sourceTree = "<group>";
@@ -96,6 +99,10 @@
 		1948B6361C88295400831AFD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					CheckMarckLabel,
+					TextLabel,
+				);
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = LECOR;
@@ -142,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19B1704C1C8867B6001D2CB7 /* AddItemViewControllerDelegate.swift in Sources */,
 				1948B6441C88295400831AFD /* ChecklistViewController.swift in Sources */,
 				1948B6561C88501200831AFD /* AddItemViewController.swift in Sources */,
 				1948B6541C88313800831AFD /* ChecklistItem.swift in Sources */,
@@ -293,6 +301,7 @@
 				1948B6521C88295400831AFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
