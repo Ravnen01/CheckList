@@ -10,5 +10,5 @@ import Foundation
 
 protocol AddItemViewControllerDelegate: class{
     func addItemViewControllerDidCancel(controller:AddItemViewController)
-    func addItemViewController(controller:AddItemViewController, didFinishAddingItem item:ChecklistItem, update:Bool,index:Int)
+    func addItemViewController(controller:AddItemViewController, didFinishAddingItem item:ChecklistItem)
 }

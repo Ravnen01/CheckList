@@ -17,24 +17,31 @@ class AddItemViewController: UITableViewController {
     
     var delegate:AddItemViewControllerDelegate?
     
-    var update:Bool?
-    var text:String?
-    var indexItem:Int?
+    var itemToEdit:ChecklistItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField.text=text
-        if self.update!{
+        if let _=itemToEdit{
+          textField.text=itemToEdit?.text
             title="EditItem"
-            bDone.enabled=true
         }else{
-            bDone.enabled=false
+            textField.text=""
+            title="AddItem"
         }
+        
         
     }
     
     @IBAction func done(sender: AnyObject) {
-        delegate?.addItemViewController(self,didFinishAddingItem: ChecklistItem(text: textField!.text!),update:update!,index:indexItem!)
+        if textField.text! != ""{
+            if let _=itemToEdit{
+                itemToEdit?.text=textField.text!
+                itemToEdit?.checked=false
+            }else{
+                itemToEdit=ChecklistItem(text: textField.text!)
+            }
+            delegate?.addItemViewController(self,didFinishAddingItem: itemToEdit!)
+        }
     }
 
     @IBAction func cancel(sender: AnyObject) {

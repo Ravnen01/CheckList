@@ -74,11 +74,17 @@ class ChecklistViewController: UITableViewController ,AddItemViewControllerDeleg
         controller.dismissViewControllerAnimated(true, completion: {})
     }
     
-    func addItemViewController(controller:AddItemViewController, didFinishAddingItem item:ChecklistItem,update:Bool,index:Int){
+    func addItemViewController(controller:AddItemViewController, didFinishAddingItem item:ChecklistItem){
         controller.dismissViewControllerAnimated(true, completion: {})
-        if update{
-            listItem[index]=item
-            let newIndexPath = NSIndexPath(forRow: index, inSection: 0)
+        if (listItem.indexOf(item) != nil){
+            let indexItem=listItem.indexOf(item)
+            let newIndexPath = NSIndexPath(forRow: indexItem!, inSection: 0)
+            tableView.reloadRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+        }
+        else if (listItem.indexOf({$0===item}) != nil){
+            let indexItem=listItem.indexOf({$0===item})
+            listItem[indexItem!]=item
+            let newIndexPath = NSIndexPath(forRow: indexItem!, inSection: 0)
             tableView.reloadRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
         }else{
             let newIndexPath = NSIndexPath(forRow: listItem.count, inSection: 0)
@@ -96,9 +102,7 @@ class ChecklistViewController: UITableViewController ,AddItemViewControllerDeleg
             let navigationController=segue.destinationViewController as! UINavigationController
             let destination=navigationController.viewControllers[0] as! AddItemViewController
             destination.delegate=self
-            destination.text=""
-            destination.indexItem=0;
-            destination.update=false
+            
         }
         
         if segue.identifier=="EditItem"{
@@ -107,9 +111,7 @@ class ChecklistViewController: UITableViewController ,AddItemViewControllerDeleg
             let destination=navigationController.viewControllers[0] as! AddItemViewController
             destination.delegate=self
             let itemSelected=tableView.indexPathForCell(sender as!UITableViewCell)?.row
-            destination.text=listItem[itemSelected!].text
-            destination.indexItem=itemSelected!;
-            destination.update=true
+            destination.itemToEdit=listItem[itemSelected!]
         }
     }
     

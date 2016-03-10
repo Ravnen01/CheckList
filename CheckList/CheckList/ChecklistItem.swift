@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ChecklistItem {
+class ChecklistItem: Equatable {
     var text:String
     var checked:Bool
     
@@ -26,4 +26,9 @@ class ChecklistItem {
         }
     }
     
+    
+    
+}
+func == (lhs: ChecklistItem, rhs: ChecklistItem)->Bool{
+    return (lhs.text==rhs.text)
 }
