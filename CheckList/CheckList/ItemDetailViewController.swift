@@ -1,5 +1,5 @@
 //
-//  AddItemViewController.swift
+//  ItemDetailViewController.swift
 //  CheckList
 //
 //  Created by Corentin LECOMTE on 03/03/2016.
@@ -8,19 +8,20 @@
 
 import UIKit
 
-class AddItemViewController: UITableViewController {
+class ItemDetailViewController: UITableViewController {
     
     
    
     @IBOutlet var bDone: UIBarButtonItem!
     @IBOutlet var textField: UITextField!
     
-    var delegate:AddItemViewControllerDelegate?
+    var delegate:ItemDetailViewControllerDelegate?
     
     var itemToEdit:ChecklistItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bDone.enabled=false
         if let _=itemToEdit{
           textField.text=itemToEdit?.text
             title="EditItem"
@@ -40,12 +41,12 @@ class AddItemViewController: UITableViewController {
             }else{
                 itemToEdit=ChecklistItem(text: textField.text!)
             }
-            delegate?.addItemViewController(self,didFinishAddingItem: itemToEdit!)
+            delegate?.itemDetailViewController(self,didFinishItem: itemToEdit!)
         }
     }
 
     @IBAction func cancel(sender: AnyObject) {
-        delegate?.addItemViewControllerDidCancel(self)
+        delegate?.itemDetailViewControllerDidCancel(self)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -56,15 +57,16 @@ class AddItemViewController: UITableViewController {
         let beforeText: NSString = textField.text!
         let afterText: NSString = beforeText.stringByReplacingCharactersInRange(range, withString: string)
         
-        if afterText.length > 0 {
-            bDone.enabled = true
-        } else {
-            bDone.enabled = false
-        }
         
+        bDone.enabled = afterText.length>0
         return true
     }
 
     
     
+}
+
+protocol ItemDetailViewControllerDelegate: class{
+    func itemDetailViewControllerDidCancel(controller:ItemDetailViewController)
+    func itemDetailViewController(controller:ItemDetailViewController, didFinishItem item:ChecklistItem)
 }

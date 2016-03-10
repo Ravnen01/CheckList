@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ChecklistItem: Equatable {
+class ChecklistItem: NSObject, NSCoding {
     var text:String
     var checked:Bool
     
@@ -26,6 +26,21 @@ class ChecklistItem: Equatable {
         }
     }
     
+    // MARK:NSCoding
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let text=aDecoder.decodeObjectForKey("text") as? String
+            else{return nil}
+        self.init(
+            text: text,
+            checked: aDecoder.decodeBoolForKey("checked")
+        )
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(self.text, forKey: "text")
+        aCoder.encodeBool(self.checked, forKey: "checked")
+    }
     
     
 }
