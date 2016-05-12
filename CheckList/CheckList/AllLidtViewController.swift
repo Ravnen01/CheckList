@@ -14,6 +14,25 @@ class AllLidtViewController: UITableViewController, ListDetailViewControllerDele
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        NSUserDefaults.standardUserDefaults().registerDefaults([
+            "FirstLaunch":true
+            ])
+        
+        if(NSUserDefaults.standardUserDefaults().boolForKey("FirstLaunch")){
+            let list=[ChecklistItem]([
+                ChecklistItem(text: "Edit your first item"),
+                ChecklistItem(text: "Swipe me to delete")
+                ])
+            lists=[Checklist]([
+                Checklist(name: "List", items: list, iconName: "Folder")
+                ])
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FirstLaunch")
+            
+        }else{
+            lists=DataModel.sharedInstance.listItem
+        }
+        
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -24,12 +43,22 @@ class AllLidtViewController: UITableViewController, ListDetailViewControllerDele
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCellWithIdentifier("CheckListCell", forIndexPath: indexPath)
         cell.textLabel!.text=lists[indexPath.row].name
-        
+        let numberOfChecked=lists[indexPath.row].uncheckedItemsCount()
+        if lists[indexPath.row].items.count != 0{
+            if numberOfChecked==0{
+                cell.detailTextLabel?.text="All Done!"
+            }else{
+                cell.detailTextLabel?.text=String(numberOfChecked)
+            }
+        }else{
+            cell.detailTextLabel?.text="(No Item)"
+        }
+        cell.imageView?.image=UIImage(named:lists[indexPath.row].iconName)
         return cell
     }
     
     override func awakeFromNib() {
-        lists=[Checklist(name: "Birthday"),Checklist(name: "Birthday 2")]
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -67,13 +96,22 @@ class AllLidtViewController: UITableViewController, ListDetailViewControllerDele
         
         if let indexItem=lists.indexOf({$0===item}){
             lists[indexItem]=item
+            DataModel.sharedInstance.listItem=lists
             let newIndexPath = NSIndexPath(forRow: indexItem, inSection: 0)
             tableView.reloadRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
         }else{
             let newIndexPath = NSIndexPath(forRow: lists.count, inSection: 0)
             lists+=[item]
+            DataModel.sharedInstance.listItem=lists
             tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
         }
+        
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        tableView.reloadData()
+    }
+    
+    
     
 }

@@ -8,11 +8,12 @@
 
 import UIKit
 
-class ListDetailViewController: UITableViewController {
+class ListDetailViewController: UITableViewController, IconPickerControllerDelegate {
 
     @IBOutlet var done: UIBarButtonItem!
     @IBOutlet var textField: UITextField!
     
+    @IBOutlet var icon: UIImageView!
     var delegate:ListDetailViewControllerDelegate?
     
     var itemToEdit:Checklist?
@@ -22,11 +23,15 @@ class ListDetailViewController: UITableViewController {
         done.enabled=false
         if let _=itemToEdit{
             textField.text=itemToEdit?.name
+            icon.image=UIImage(named: (itemToEdit?.iconName)!)
             title="EditList"
         }else{
             textField.text=""
             title="AddList"
+            icon.image=UIImage(named: "Folder")
         }
+        
+        
     }
     
 
@@ -57,6 +62,22 @@ class ListDetailViewController: UITableViewController {
 
         done.enabled = afterText.length>0
         return true
+    }
+    
+    func iconPickerViewController(controller: IconPickerViewController, didFinishIcon iconName: String) {
+        self.navigationController?.popViewControllerAnimated(true)
+        icon.image=UIImage(named: iconName)
+        itemToEdit?.iconName=iconName
+        if (textField.text) != nil{
+                self.done.enabled=true
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier=="IconChoise"{
+            let destination=segue.destinationViewController as! IconPickerViewController
+            destination.delegate=self
+        }
     }
     
 }

@@ -20,7 +20,11 @@ class ChecklistViewController: UITableViewController ,ItemDetailViewControllerDe
         super.viewDidLoad()
         title=list.name
         
+            listItem=list.items
+        
+        
         print(dataFileUrl().path!)
+        
 
         
         
@@ -46,9 +50,13 @@ class ChecklistViewController: UITableViewController ,ItemDetailViewControllerDe
     func configureCheckmarkForCell(cell: UITableViewCell, withItem item: ChecklistItem){
         let label=cell.viewWithTag(1) as! UILabel
         if item.checked{
-            label.text="✔"
+            label.text="✓"
+            
+            label.textColor=UIColor.redColor()
         }else{
             label.text=""
+            
+            label.textColor=UIColor.redColor()
         }
     }
     func configureTextForCell(cell: UITableViewCell, withItem item: ChecklistItem){
@@ -81,11 +89,13 @@ class ChecklistViewController: UITableViewController ,ItemDetailViewControllerDe
         
         if let indexItem=listItem.indexOf({$0===item}){
             listItem[indexItem]=item
+            list.items=listItem
             let newIndexPath = NSIndexPath(forRow: indexItem, inSection: 0)
             tableView.reloadRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
         }else{
             let newIndexPath = NSIndexPath(forRow: listItem.count, inSection: 0)
             listItem+=[item]
+            list.items=listItem
             tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
         }
         //saveChecklistItems()
@@ -124,22 +134,6 @@ class ChecklistViewController: UITableViewController ,ItemDetailViewControllerDe
         return file
     }
     
-//    func saveChecklistItems(){
-//        NSKeyedArchiver.archiveRootObject(listItem, toFile: dataFileUrl().path!)
-//    }
-//    
-//    func loadChecklistItem(){
-//        let Items=NSKeyedUnarchiver.unarchiveObjectWithFile(dataFileUrl().path!) as? [ChecklistItem]
-//        if Items != nil{
-//            listItem=Items!
-//        }else{
-//            listItem=[ChecklistItem]()
-//        }
-//        
-//    }
-//    
-//    override func awakeFromNib() {
-//        loadChecklistItem()
-//    }
+    
 }
 
